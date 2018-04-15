@@ -137,7 +137,21 @@ public class GraphProcessor {
      * @return Integer distance
      */
     public Integer getShortestDistance(String word1, String word2) {
-        return null;
+        if(word1 == null || word2 == null || !map.containsKey(word1) || !map.containsKey(word2)) return -1;
+        
+        int min = Integer.MAX_VALUE, i = 0, j = 0;
+        List<Integer> lst1 = map.get(word1); 
+        List<Integer> lst2 = map.get(word2);
+        int len1 = lst1.size(), len2 = lst2.size();
+        
+        while(i < len1  && j < len2){
+            int index1 = lst1.get(i), index2 = lst2.get(j);
+            min = Math.min(min, Math.abs(index1 - index2));
+            if(index1 > index2) j++;
+            else i++;
+        }
+        return min;
+    }
     }
     
     /**
@@ -146,6 +160,6 @@ public class GraphProcessor {
      * Any shortest path algorithm can be used (Djikstra's or Floyd-Warshall recommended).
      */
     public void shortestPathPrecomputation() {
-    
+        `
     }
 }
