@@ -8,7 +8,7 @@
 //
 // USER:             rshih2@wisc.edu
 //                   xshao36@wisc.edu
-//                   nsinde36@wisc.edu 
+//                   sinde@wisc.edu 
 //                   
 //                 
 //
