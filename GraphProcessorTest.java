@@ -9,7 +9,7 @@
 // USER:             sinde@wisc.edu
 //                   xshao36@wisc.edu
 //                   rshih2@wisc.edu
-//                   
+//                   escott7@wisc.edu
 //                 
 //
 // Instructor:       Deb Deppeler (deppeler@cs.wisc.edu)
