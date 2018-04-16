@@ -1,19 +1,21 @@
 ////////////////////////////////////////////////////////////////////////////
 // Semester:         CS400 Spring 2018
-// PROJECT:          DictionaryGraph
+// PROJECT:          P4_DictionaryGraph
 // FILES:            Graph.java
-//                   GraphProcessor.java
-//                   GraphTest.java
-//                   WordProcessor.java
+// 		     GraphProcessor.java
+//		     GraphTest.java
+// 		     WordProcessor.java
 //
-// USERS:            sinde@wisc.edu
-//                  
+// USER:             sinde@wisc.edu
+//                   xshao36@wisc.edu
+//                   rshih2@wisc.edu
+//                   
 //                 
 //
 // Instructor:       Deb Deppeler (deppeler@cs.wisc.edu)
-// Bugs:             no known bugs, but not complete either
+// Bugs:             no known bugs
 //
-// 2018 Apr 16, 2018 GraphProcessorTest.java 
+// 2018 Apr 16, 2018 WordProcessor.java 
 ////////////////////////////80 columns wide //////////////////////////////////
 import static org.junit.Assert.assertEquals;
 
