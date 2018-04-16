@@ -108,68 +108,69 @@ public class WordProcessor {
 	 * @return true if word1 and word2 are adjacent else false
 	 */
 	 public static boolean isAdjacent(String word1, String word2) {
-		 	if(word1.length() == word2.length()) 
+		    if(word1.length() == word2.length()) 
 		 	{
 		 		/*since the words are equal in length, they
-		 	    can only be adjacent by substitution*/
-	            int subChar = 0;
-	            for(int i = 0; i < word1.length(); i++)
-	            {
-	                if(word1.charAt(i) != word2.charAt(i))
-	                {
-	                		subChar++;
-	                	}
-	            }
-	            //subChar must be exactly one to return true, meaning one char replacement
-	            if (subChar == 1)
-	            {
-	            	return true;
-	            }
-	            else return false;
-	        }
+		 	        can only be adjacent by substitution*/
+	                        int subChar = 0;
+	                        for(int i = 0; i < word1.length(); i++)
+	                        {
+	                		if(word1.charAt(i) != word2.charAt(i))
+	                		{
+	                			subChar++;
+	                		}
+	            		}
+	            		//subChar must be exactly one to return true, meaning one char replacement
+	            		if (subChar == 1)
+	            		{
+	            			return true;
+	            		}
+	            		else return false;
+	        	}
 		 	//returns false when the length difference is more than 1
-	        if(Math.abs(word1.length()-word2.length()) > 1)
-	        {
-	            return false;
-	        }
-	        //when words length differ in length, must be add or delete
-	        String bigWord, smallWord;
-	        if(word1.length() > word2.length())
-	        {
-	            bigWord = word1;
-	            smallWord = word2;
-	        }
-	        else 
-	        {
-	            bigWord = word2;
-	            smallWord = word1;
-	        }
+	        	if(Math.abs(word1.length()-word2.length()) > 1)
+	       		{
+	            		return false;
+	        	}
+	        	//when words length differ in length, must be add or delete
+	        	String bigWord;
+		 	String smallWord;
+	        	if(word1.length() > word2.length())
+	        	{
+	            		bigWord = word1;
+	            		smallWord = word2;
+	        	}
+	        	else 
+	        	{
+	            		bigWord = word2;
+	            		smallWord = word1;
+	        	}
 	        
-	        //if the addition is at the end, return true immediately
-	        if(bigWord.substring(0, bigWord.length()-1).equals(smallWord))
-	        {
-	            return true;
-	        }
-	        //compare two words when difference not at end
-	        boolean indicator = false;
-	        int b = 0;
-	        for(int s = 0; s <smallWord.length(); s++)
-	        {
-	            if(bigWord.charAt(b) != smallWord.charAt(s))
-	            {
-	                if(indicator)
-	                {
-	                    return false;
-	                } 
-	                else
-	                {
-	                    indicator = true;
-	                    s--;
-	                }
-	            }
-	            b++;
-	        }
-	        return true;
-	    }
+	        	//if the addition is at the end, return true immediately
+	        	if(bigWord.substring(0, bigWord.length()-1).equals(smallWord))
+	        	{
+	            		return true;
+	        	}
+	        	//compare two words when difference not at end
+	        	boolean indicator = false;
+	        	int b = 0;
+	        	for(int s = 0; s <smallWord.length(); s++)
+	        	{
+	            		if(bigWord.charAt(b) != smallWord.charAt(s))
+	            		{
+	                		if(indicator)
+	                		{
+	                    			return false;
+	                		} 
+	                		else
+	                		{
+	                    			indicator = true;
+	                    			s--;
+	                		}
+	            		}
+	            		b++;
+	        	}
+	        	return true;
+	    	}
 	    
 	}
