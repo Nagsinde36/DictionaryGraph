@@ -5,7 +5,7 @@
 // 		     GraphProcessor.java
 //		     GraphTest.java
 // 		     WordProcessor.java
-//
+//		     GraphProcessorTest.java
 // USER:             rshih2@wisc.edu
 //                   xshao36@wisc.edu
 //                   sinde@wisc.edu 
