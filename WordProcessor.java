@@ -2,9 +2,9 @@
 // Semester:         CS400 Spring 2018
 // PROJECT:          P4_DictionaryGraph
 // FILES:            Graph.java
-// GraphProcessor.java
-// GraphTest.java
-// WordProcessor.java
+// 		     GraphProcessor.java
+//		     GraphTest.java
+// 		     WordProcessor.java
 //
 // USER:             rshih2@wisc.edu
 //                  
