@@ -1,3 +1,22 @@
+////////////////////////////////////////////////////////////////////////////
+// Semester:         CS400 Spring 2018
+// PROJECT:          P4_DictionaryGraph
+// FILES:            Graph.java
+// 		             GraphProcessor.java
+//		             GraphTest.java
+// 		             WordProcessor.java
+//                   GraphProcessorTest.java
+// USER:             xshao36@wisc.edu
+//                   sinde@wisc.edu
+//                   rshih2@wisc.edu
+//                   
+//                 
+//
+// Instructor:       Deb Deppeler (deppeler@cs.wisc.edu)
+// Bugs:             no known bugs
+//
+// 2018 Apr 16, 2018 WordProcessor.java 
+////////////////////////////80 columns wide //////////////////////////////////
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.HashSet;
