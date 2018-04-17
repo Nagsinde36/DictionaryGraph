@@ -1,9 +1,10 @@
+////////////////////////////////////////////////////////////////////////////
 // Semester:         CS400 Spring 2018
 // PROJECT:          P4_DictionaryGraph
 // FILES:            Graph.java
-//           GraphProcessor.java
-//           GraphTest.java
-//           WordProcessor.java
+// 		     GraphProcessor.java
+//		     GraphTest.java
+// 		     WordProcessor.java
 //                   GraphProcessorTest.java
 // USER:             sinde@wisc.edu
 //                   xshao36@wisc.edu
@@ -16,9 +17,10 @@
 //
 // 2018 Apr 16, 2018 WordProcessor.java 
 ////////////////////////////80 columns wide //////////////////////////////////
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -26,344 +28,329 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
 /**
- * Test class
- * 
- * Test the work of BalancedSearchTree
+ * Junit test class to test class @see Graph that implements @see GraphADT interface
+ *
+ * @author sapan (sapan@cs.wisc.edu)
  */
-public class TestSearchTree {
-    SearchTreeADT<Integer> iTree = null;
-	SearchTreeADT<String> strTree = null;
-	String expected = null;
-	String actual = null;
+public class GraphTestTest {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
+	private GraphADT<String> graph;
+	
+	private static List<String> vertices;
+	
+	private static int numOfVertices = 0;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		vertices = new ArrayList<>();
+		vertices.add("at");
+		vertices.add("it");
+		vertices.add("cat");
+		vertices.add("hat");
+		vertices.add("hot");
+		vertices.add("rat");
+		vertices.add("heat");
+		vertices.add("neat");
+		vertices.add("major");
+		vertices.add("wheat");
+		vertices.add("streak");	
+		vertices.add("husband");
+		for (String vertex : vertices)
+			numOfVertices++;
 	}
 
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		vertices = null;
+		numOfVertices = 0;
 	}
 
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@Before
 	public void setUp() throws Exception {
-		strTree = new BalancedSearchTree<String>();
-		iTree = new BalancedSearchTree<Integer>();
+		this.graph = new Graph<>();
 	}
 
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@After
 	public void tearDown() throws Exception {
-	     
-	}
-
-	
-	/**
-     * Test the ismEpty() method on empty tree
-     *  
-     * Fails if ismEpty() returns false for a newly construct search tree
-     */
-	@Test
-	public void test01_isEmpty_on_empty_tree() {
-		expected = "true";
-		actual = "" + strTree.isEmpty();
-		if (! expected.equals(actual))
-			fail("expected: "+expected+ " actual: "+actual);
-	}
-	/**
-     * Test the inAscendingOrder() method on empty tree
-     *  
-     * Fails if ismEpty() does not return "" 
-     * for a newly construct search tree
-     */
-	@Test
-	public void test02_ascending_order_on_empty_tree() {
-		expected = "";
-		actual = strTree.inAscendingOrder();
-		if (! expected.equals(actual))
-			fail("expected: "+expected+ " actual: "+actual);
-	}
-
-	/** tests that the height of an empty tree is 0 */
-	@Test
-	public void test03_height_on_empty_tree() {
-		expected = "0";
-		actual = "" + strTree.height();
-		if (! expected.equals(actual))
-			fail("expected: "+expected+ " actual: "+actual);
+		this.graph = null;
 	}
 
 	@Test
-	/** tests that the height of one insert item is 1 */
-	public void test04_isEmpty_after_one_insert() {
-		strTree.insert("1");
-		expected = "false";
-		actual = "" + strTree.isEmpty();
-		if (! expected.equals(actual))
-			fail("expected: "+expected+ " actual: "+actual);
-	}
-
-	@Test
-	/** tests that the ascending order after inserting A  is "A," */
-	public void test05_ascending_order_after_one_insert() {
-		strTree.insert("A");
-		expected = "A,";
-		actual = strTree.inAscendingOrder();
-		if (! expected.equals(actual))
-			fail("expected: "+expected+ " actual: "+actual);
-	}
-
-	@Test
-	/** tests that the height after inserting A is 1 */
-	public void test06_height_after_one_insert() {
-		strTree.insert("A");
-		expected = "1";
-		actual = "" + strTree.height();
-		if (! expected.equals(actual))
-			fail("expected: "+expected+ " actual: "+actual);
-	}
-
-	@Test
-	/** tests that the height after inserting A and deleting it is 0 */
-	public void test07_height_after_one_insert_and_delete() {
-		strTree.insert("A");
-		strTree.delete("A");
-		expected = "0";
-		actual = "" + strTree.height();
-		if (! expected.equals(actual))
-			fail("expected: "+expected+ " actual: "+actual);
-	}
-	@Test
-	/** tests that the ascending order after inserting many items are ascending */
-	public void test08_ascending_order_after_many_insert() {
-	    String [] insertItem = {"A","B","C","G","E","F","D","H","I","J"}; 
-	    
-	    for (String u : insertItem) 
-            strTree.insert(new String(u));
-        expected = "A,B,C,D,E,F,G,H,I,J,";
-        actual = strTree.inAscendingOrder();
-        if (! expected.equals(actual))
-            fail("expected: "+expected+ " actual: "+actual);
-	}
-	/** tests that the exception thrown by lookup method if null as input */
-	@Test
-	public void test09_lookup_after_null_insert() {
-	    try {
-            strTree.lookup(null); // Insert a null array
-            fail("Cannot throw the exception when delete item is null");
-        
-       }
-       catch(IllegalArgumentException e) { // Catch the IllegalArgumentException
-       }    
-	}
-
-	/** tests that the exception thrown by delete method 
-	 * if the input item not exist in the balance tree */
-	@Test
-	public void test10delete_not_existItem() {
-	    try {
-            strTree.delete(null); // Insert a null array
-            fail("Cannot throw the exception when delete item is null");
-        
-       }
-       catch(IllegalArgumentException e) { // Catch the IllegalArgumentException
-       }  
-	}
-
-	/** tests that the exception thrown by insert method if null as input */
-	@Test
-	public void test11_insert_null_input() {
-	    try {
-            strTree.insert(null); // Insert a null array
-            fail("Cannot throw the exception when insert item is null");
-        
-       }
-       catch(IllegalArgumentException e) { // Catch the IllegalArgumentException
-       }
-	}
-
-	/** tests that the exception thrown by delete method if the balance tree is null */
-	@Test
-	public void test12_delete_of_emptyTree() {
-	    try {
-            strTree.delete("A");
-            //Test whether delete cause strTree change
-            if(strTree.height()!=0)
-                fail("Cannot matain the tree when delete item on an empty tree") ;
-        
-       }
-       catch(Exception e) { // Catch the Exception can be caused by the delete
-           fail("Cannot matain the tree when delete item on an empty tree");
-       } 
-	}
-
-	
-	/** tests that the duplicate insert will not change the status of the tree */
-	@Test
-	public void test13duplicate_insert_of_tree() {
-	    try {
-            strTree.insert("A");
-            strTree.insert("A");// Insert a duplicate item
-            fail("Cannot throw the exception when insert items are duplicate");
-        
-       }
-       catch(DuplicateException e) { // Catch the DuplicateException
-           
-       }
-    }
-	
-	/**Inserts a series of items into a tree, and then deletes several 
-	 * of those items.
-	 *  
-	 *  Fails if the item is not properly returned.
-	 */
-	@Test
-    public void test14delete_is_in_tree() {
-	    String [] insertItem = {"A","B","C","G","E","F","D","H","I","J"}; 
-        
-        for (String u : insertItem) 
-            strTree.insert(new String(u));
-        strTree.delete("C");
-        strTree.delete("E");
-        strTree.delete("J");
-        expected = "A,B,D,F,G,H,I,";
-        actual = strTree.inAscendingOrder();
-        if (! expected.equals(actual))
-            fail("expected: "+expected+ " actual: "+actual); 
-	}
-	@Test
-	/**Inserts a series of items into a tree, and then deletes item not in the 
-     * tree.
-     *  
-     *  Fails if returns error or cause side-effect.
-     */
-	public void test15delete_is_not_in_tree() {
-        String [] insertItem = {"A","B","C","D","E","F"}; 
-        
-        for (String u : insertItem) 
-            strTree.insert(new String(u));
-        strTree.delete("J");// Delete item not in the tree
-        expected = "A,B,C,D,E,F,";
-        actual = strTree.inAscendingOrder();
-        if (! expected.equals(actual))
-            fail("expected: "+expected+ " actual: "+actual); 
-    }
-	@Test
-	/**Inserts a series of items into a tree, and then find item  in the tree.
-     *  
-     *  Fails if returns false
-     */
-	public void test16_lookup_finds_item_exsit() {
-	    strTree.insert("A");
-	    strTree.insert("D");
-	    strTree.insert("E");
-	    strTree.insert("H");
-	    expected = "true";
-        actual = "" + strTree.lookup("H");
-        if (! expected.equals(actual))
-            fail("expected: "+expected+ " actual: "+actual);
-
-	}
-	@Test
-	/**Inserts a series of items into a tree, and then find item not in the tree.
-     *  
-     *  Fails if returns true
-     */
-	public void test17_lookup_finds_item_not_exsit() {
-        strTree.insert("A");
-        strTree.insert("C");
-        strTree.insert("D");
-        expected = "false";
-        actual = "" + strTree.lookup("B");
-        if (! expected.equals(actual))
-            fail("expected: "+expected+ " actual: "+actual);
-
-    }
-	@Test
-	/**Find item in an empty tree.
-     *  
-     *  Fails if returns true
-     */
-	public void test18_lookup_finds_item_in_emptyTree() {
-        expected = "false";
-        actual = "" + strTree.lookup("A");
-        if (! expected.equals(actual))
-            fail("expected: "+expected+ " actual: "+actual);
-
-    }
-	
-	@Test
-    /**Check the balance of the tree after many items inserted.
-     *  
-     *  Fails if the height of the tree not between 0 an a*log2N
-     */
-	public void  test19_keep_balance_after_many_inserts() {
-	    String [] insertItem = {"A","B","C","D","E","F","G","H","I","K"}; 
-        double n= 10;
-        for (String u : insertItem) 
-            strTree.insert(new String(u));
-        int height = strTree.height();
-        if(height>2*Math.log(n)/Math.log(2) && height < 0) {
-            fail("The tree is not balanced");
-        }
+	public final void addVertexShouldNotAllowNullVertexAddition() {
+		String vertex = this.graph.addVertex(null);
+		assertEquals("return value when adding null vertex", null, vertex);
+		
+		int verticesCount = 0;
+		for (String itrVertex : this.graph.getAllVertices()) {
+			verticesCount++;
+		}
+		assertEquals("number of vertices in the graph", 0, verticesCount);
 	}
 	
 	@Test
-	/**Check the ascending order after large number of Integers are inserted.
-     *  
-     *  Fails if the result not in ascending order
-     */
-	public void  test20_ascending_after_large_number_of_Integers() {
-	    Integer [] unsorted = new Integer[50]; 
-        //Generate an unsorted array with random numbers
-        for (int i = 0; i < 50; i++) {
-            unsorted[i]= new Integer(i+1) ;
-        }
-        Integer[] sorted = unsorted.clone(); 
-        Arrays.sort(sorted); // Sort the unsorted array
-        
-        for (int u : unsorted) 
-            iTree.insert(new Integer(u));
-        //Compare the actual item output and the expected item   
-        String expected = "";
-        for (int k = 0; k <= sorted.length-1; k++) { 
-                expected += Integer.toString(sorted[k])+","; }
-                String actual = iTree.inAscendingOrder(); 
-                if (expected.equals(actual)==false) 
-                    fail("expected: "+expected+ " actual: "+actual);
-        
-    }
+	public final void addVertexShouldAddUniqueVertices() {
+		List<String> addedVertices = new ArrayList<>();
+		for (String itrVertex1 : vertices) {
+			String returnedVertex = this.graph.addVertex(itrVertex1);
+			assertEquals("returned value doesn't match passed parameter", itrVertex1, returnedVertex);
+			addedVertices.add(returnedVertex);
+			int verticesCount = 0;
+			for (String itrVertex2 : this.graph.getAllVertices()) {
+				verticesCount++;
+				assertEquals("added vertex value present in graph", true, addedVertices.contains(itrVertex2));
+			}
+			assertEquals("number of vertices in the graph", addedVertices.size(), verticesCount);		
+		}
+	}
 	
 	@Test
-	/**Check the balance of the tree after many items are deleted.
-     *  
-     *  Fails if the height of the tree not between 0 an a*log2N
-     */
-	public void  test21_keep_balance_after_delete_many_items() {
-        String [] insertItem = {"A","B","C","D","E","F","G","H","I","K"}; 
-        double n= 10;
-        for (String u : insertItem) 
-            strTree.insert(new String(u));
-        strTree.delete("C");
-        strTree.delete("G");
-        strTree.delete("B");
-        int height = strTree.height();
-        //Compare the height of the tree and the limit
-        if(height>2*Math.log(n)/Math.log(2) && height < 0) { 
-            fail("The tree is not balanced");
-        }
-    }
+	public final void addVertexShouldNotAllowDuplicateVertexAddition() {
+		String vertex1 = this.graph.addVertex(vertices.get(0));
+		System.out.println("vertex1="+vertex1);
+		String vertex2 = this.graph.addVertex(vertices.get(0));
+		System.out.println("vertex2="+vertex2);
+		assertEquals("return value when adding duplicate vertex", null, vertex2);
+		
+		int verticesCount = 0;
+		for (String itrVertex : this.graph.getAllVertices())
+			verticesCount++;
+		assertEquals("number of vertices in the graph", 1, verticesCount);
+	}
+
+	@Test
+	public final void addEdgeIfAnyOfTheVerticesDoesNotExist() {
+		// setup the graph by adding few vertices
+		int breakIndex = 6;
+		List<String> toBeAddedVertices = new ArrayList<>(vertices.subList(0, breakIndex));
+		List<String> notToBeAddedVertices = new ArrayList<>(vertices.subList(breakIndex, breakIndex+2));
+		for (String itrVertex : toBeAddedVertices)
+			this.graph.addVertex(itrVertex);
+		
+		assertEquals("return value if vertex1 doesn't exist", 
+				false, this.graph.addEdge(notToBeAddedVertices.get(0), toBeAddedVertices.get(0)));		
+		assertEquals("return value if vertex2 doesn't exist", 
+				false, this.graph.addEdge(toBeAddedVertices.get(0), notToBeAddedVertices.get(0)));
+		assertEquals("return value if both vertex1 and vertex2 doesn't exist", 
+				false, this.graph.addEdge(notToBeAddedVertices.get(0), notToBeAddedVertices.get(1)));
+		
+		// check if any edge added
+		int verticesCount = 0;
+		for (String itrVertex : this.graph.getAllVertices()) {
+			verticesCount++;
+			int numOfEdges = 0;
+			for (String itrNeighbor : this.graph.getNeighbors(itrVertex)) {
+				numOfEdges++;
+			}
+			assertEquals(String.format("number of neighbors for vertex=%s", itrVertex), 0, numOfEdges);
+		}
+		assertEquals("number of vertices in the graph", breakIndex, verticesCount);
+	}
+	
+	@Test
+	public final void addEdgeIfBothVerticesExist() {
+		// setup the graph by adding few vertices
+		for (String itrVertex : vertices)
+			this.graph.addVertex(itrVertex);
+		
+		assertEquals("return value if vertex1 equals vertex2", 
+				false, this.graph.addEdge(vertices.get(0), vertices.get(0)));
+		assertEquals("return value if vertex1 does not equal vertex2", 
+				true, this.graph.addEdge(vertices.get(0), vertices.get(1)));
+		
+		// check if correct edges added
+		int verticesCount = 0;
+		for (String itrVertex : this.graph.getAllVertices()) {
+			verticesCount++;
+			int numOfEdges = 0;
+			for (String itrNeighbor : this.graph.getNeighbors(itrVertex)) {
+				numOfEdges++;
+				if (itrVertex.equals(vertices.get(0)))
+					assertEquals(String.format("neighbor of vertex=%s", itrVertex), vertices.get(1), itrNeighbor);
+				else if (itrVertex.equals(vertices.get(1)))
+					assertEquals(String.format("neighbor of vertex=%s", itrVertex), vertices.get(0), itrNeighbor);
+			}
+			if (itrVertex.equals(vertices.get(0)) || itrVertex.equals(vertices.get(1)))
+				assertEquals(String.format("number of neighbors for vertex=%s", itrVertex), 1, numOfEdges);
+			else
+				assertEquals(String.format("number of neighbors for vertex=%s", itrVertex), 0, numOfEdges);
+		}
+		assertEquals("number of vertices in the graph", numOfVertices, verticesCount);
+	}
+	
+	@Test
+	public final void removeEdgeIfAnyOfTheVerticesDoesNotExist() {
+		// setup the graph by adding few vertices and edges
+		int breakIndex = 6;
+		List<String> toBeAddedVertices = new ArrayList<>(vertices.subList(0, breakIndex));
+		List<String> notToBeAddedVertices = new ArrayList<>(vertices.subList(breakIndex, breakIndex+2));
+		for (String itrVertex : toBeAddedVertices)
+			this.graph.addVertex(itrVertex);
+		this.graph.addEdge(toBeAddedVertices.get(0), toBeAddedVertices.get(1));
+		
+		assertEquals("return value if vertex1 doesn't exist", 
+				false, this.graph.removeEdge(notToBeAddedVertices.get(0), toBeAddedVertices.get(0)));		
+		assertEquals("return value if vertex2 doesn't exist", 
+				false, this.graph.removeEdge(toBeAddedVertices.get(0), notToBeAddedVertices.get(0)));
+		assertEquals("return value if both vertex1 and vertex2 doesn't exist", 
+				false, this.graph.removeEdge(notToBeAddedVertices.get(0), notToBeAddedVertices.get(1)));
+		
+		// check if any edge added
+		int verticesCount = 0;
+		for (String itrVertex : this.graph.getAllVertices()) {
+			verticesCount++;
+			int numOfEdges = 0;
+			for (String itrNeighbor : this.graph.getNeighbors(itrVertex)) {
+				numOfEdges++;
+				if (itrVertex.equals(vertices.get(0)))
+					assertEquals(String.format("neighbor of vertex=%s", itrVertex), vertices.get(1), itrNeighbor);
+				else if (itrVertex.equals(vertices.get(1)))
+					assertEquals(String.format("neighbor of vertex=%s", itrVertex), vertices.get(0), itrNeighbor);
+			}
+			if (itrVertex.equals(vertices.get(0)) || itrVertex.equals(vertices.get(1)))
+				assertEquals(String.format("number of neighbors for vertex=%s", itrVertex), 1, numOfEdges);
+			else
+				assertEquals(String.format("number of neighbors for vertex=%s", itrVertex), 0, numOfEdges);
+		}
+		assertEquals("number of vertices in the graph", breakIndex, verticesCount);
+	}
+	
+	@Test
+	public final void removeEdgeIfBothVerticesExist() {
+		// setup the graph by adding few vertices and edges
+		for (String itrVertex : vertices)
+			this.graph.addVertex(itrVertex);
+		this.graph.addEdge(vertices.get(0), vertices.get(1));
+		this.graph.addEdge(vertices.get(1), vertices.get(2));
+		
+		assertEquals("return value if vertex1 equals vertex2", 
+				false, this.graph.removeEdge(vertices.get(0), vertices.get(0)));
+		assertEquals("return value if vertex1 does not equal vertex2", 
+				true, this.graph.removeEdge(vertices.get(0), vertices.get(1)));
+		
+		// check if correct edges added
+		int verticesCount = 0;
+		for (String itrVertex : this.graph.getAllVertices()) {
+			verticesCount++;
+			int numOfEdges = 0;
+			for (String itrNeighbor : this.graph.getNeighbors(itrVertex)) {
+				numOfEdges++;
+				if (itrVertex.equals(vertices.get(1)))
+					assertEquals(String.format("neighbor of vertex=%s", itrVertex), vertices.get(2), itrNeighbor);
+				else if (itrVertex.equals(vertices.get(2)))
+					assertEquals(String.format("neighbor of vertex=%s", itrVertex), vertices.get(1), itrNeighbor);
+			}
+			if (itrVertex.equals(vertices.get(1)) || itrVertex.equals(vertices.get(2)))
+				assertEquals(String.format("number of neighbors for vertex=%s", itrVertex), 1, numOfEdges);
+			else
+				assertEquals(String.format("number of neighbors for vertex=%s", itrVertex), 0, numOfEdges);
+		}
+		assertEquals("number of vertices in the graph", numOfVertices, verticesCount);
+	}
+	
+	@Test
+	public final void isAdjacentIfAnyOfTheVerticesDoesNotExist() {
+		// setup the graph by adding a few vertices and edges
+		int breakIndex = 6;
+		List<String> toBeAddedVertices = new ArrayList<>(vertices.subList(0, breakIndex));
+		List<String> notToBeAddedVertices = new ArrayList<>(vertices.subList(breakIndex, breakIndex+2));
+		for (String itrVertex : toBeAddedVertices)
+			this.graph.addVertex(itrVertex);
+		this.graph.addEdge(toBeAddedVertices.get(0), toBeAddedVertices.get(1));
+		
+		assertEquals("return value if vertex1 doesn't exist", 
+				false, this.graph.isAdjacent(notToBeAddedVertices.get(0), toBeAddedVertices.get(0)));		
+		assertEquals("return value if vertex2 doesn't exist", 
+				false, this.graph.isAdjacent(toBeAddedVertices.get(0), notToBeAddedVertices.get(0)));
+		assertEquals("return value if both vertex1 and vertex2 doesn't exist", 
+				false, this.graph.isAdjacent(notToBeAddedVertices.get(0), notToBeAddedVertices.get(1)));
+	}
+	
+	@Test
+	public final void isAdjacentIfBothVerticesExist() {
+		// setup the graph by adding a few vertices and edges
+		for (String itrVertex : vertices)
+			this.graph.addVertex(itrVertex);
+		this.graph.addEdge(vertices.get(0), vertices.get(1));
+		this.graph.addEdge(vertices.get(1), vertices.get(2));
+		
+		assertEquals("return value if vertex1 equals vertex2", 
+				false, this.graph.isAdjacent(vertices.get(0), vertices.get(0)));
+		assertEquals("return value if vertex1 does not equal vertex2, both are disconnected and vertex1 has a neighbor", 
+				false, this.graph.isAdjacent(vertices.get(0), vertices.get(3)));
+		assertEquals("return value if vertex1 does not equal vertex2, both are disconnected and vertex2 has a neighbor", 
+				false, this.graph.isAdjacent(vertices.get(3), vertices.get(0)));
+		assertEquals("return value if vertex1 does not equal vertex2, both are disconnected and both have a neighbor", 
+				false, this.graph.isAdjacent(vertices.get(2), vertices.get(0)));
+		assertEquals("return value if vertex1 does not equal vertex2 and both are connected", 
+				true, this.graph.isAdjacent(vertices.get(0), vertices.get(1)));
+	}
+	
+	@Test
+	public final void removeVertexReturnsNull() {
+		// setup the graph by adding a few vertices and edges
+		int breakIndex = 6;
+		List<String> toBeAddedVertices = new ArrayList<>(vertices.subList(0, breakIndex));
+		List<String> notToBeAddedVertices = new ArrayList<>(vertices.subList(breakIndex, breakIndex+2));
+		for (String itrVertex : toBeAddedVertices)
+			this.graph.addVertex(itrVertex);
+		this.graph.addEdge(toBeAddedVertices.get(0), toBeAddedVertices.get(1));
+		
+		String vertex = this.graph.removeVertex(null);
+		assertEquals("return value if null passed to removeVertex", null, vertex);
+		vertex = this.graph.removeVertex(notToBeAddedVertices.get(0));
+		assertEquals("return value if vertex passed to removeVertex does not exist in graph", null, vertex);
+		
+		// check if graph affected
+		int verticesCount = 0;
+		for (String itrVertex : this.graph.getAllVertices()) {
+			verticesCount++;
+			int numOfEdges = 0;
+			for (String itrNeighbor : this.graph.getNeighbors(itrVertex)) {
+				numOfEdges++;
+				if (itrVertex.equals(vertices.get(0)))
+					assertEquals(String.format("neighbor of vertex=%s", itrVertex), vertices.get(1), itrNeighbor);
+				else if (itrVertex.equals(vertices.get(1)))
+					assertEquals(String.format("neighbor of vertex=%s", itrVertex), vertices.get(0), itrNeighbor);
+			}
+			if (itrVertex.equals(vertices.get(0)) || itrVertex.equals(vertices.get(1)))
+				assertEquals(String.format("number of neighbors for vertex=%s", itrVertex), 1, numOfEdges);
+			else
+				assertEquals(String.format("number of neighbors for vertex=%s", itrVertex), 0, numOfEdges);
+		}
+		assertEquals("num of vertices in the graph", breakIndex, verticesCount);
+	}
+	
+	@Test
+	public final void removeVertexReturnsNonNull() {
+		// setup the graph by adding a few vertices and edges
+		for (String itrVertex : vertices)
+			this.graph.addVertex(itrVertex);
+		this.graph.addEdge(vertices.get(0), vertices.get(1));
+		
+		String vertex = this.graph.removeVertex(vertices.get(2));
+		assertEquals("return value if vertex passed to removeVertex is disconnected", vertices.get(2), vertex);
+		
+		vertex = this.graph.removeVertex(vertices.get(0));
+		assertEquals("return value if vertex passed to removeVertex is connected to another vertex", vertices.get(0), vertex);
+		
+		// check the graph
+		int verticesCount = 0;
+		for (String itrVertex : this.graph.getAllVertices()) {
+			verticesCount++;
+			int numOfEdges = 0;
+			for (String itrNeighbor : this.graph.getNeighbors(itrVertex)) {
+				numOfEdges++;
+				assertEquals(String.format("presence of neighbor=%s of vertex=%s", itrNeighbor, itrVertex), 
+						false, itrVertex.equals(vertices.get(0)) && itrNeighbor.equals(vertices.get(1)));
+				assertEquals(String.format("presence of neighbor=%s of vertex=%s", itrNeighbor, itrVertex), 
+						false, itrVertex.equals(vertices.get(1)) && itrNeighbor.equals(vertices.get(0)));
+			}
+			assertEquals(String.format("presence of vertex=%s", itrVertex), false, itrVertex.equals(vertices.get(0)));
+			assertEquals(String.format("presence of vertex=%s", itrVertex), false, itrVertex.equals(vertices.get(2)));
+		}
+		assertEquals("num of vertices in the graph", numOfVertices-2, verticesCount);
+	}
+
 }
 
