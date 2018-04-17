@@ -9,7 +9,7 @@
 // USER:             sinde@wisc.edu
 //                   xshao36@wisc.edu
 //                   rshih2@wisc.edu
-//                   
+//                   escott7@wisc.edu
 //                 
 //
 // Instructor:       Deb Deppeler (deppeler@cs.wisc.edu)
@@ -19,6 +19,8 @@
 ////////////////////////////80 columns wide //////////////////////////////////
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Arrays;
+
 
 
 
@@ -43,11 +45,7 @@ public class Graph<E> implements GraphADT<E> {
         vertices = (E[]) new Object[MAX_VERTEX];  
         adjacency = new int[MAX_VERTEX][MAX_VERTEX];  
         numOfVertex = 0;  
-        //initial the adjacent matrix
-        for (int i = 0; i < MAX_VERTEX; i++) {  
-            for (int j = 0; j < MAX_VERTEX; j++)  
-                adjacency[i][j] = 0; // represent no edge between two vertxes 
-        }  
+        //A default value of 0 for arrays of int types is guaranteed by the language spec
     }
     /**
      * Expand the capacity of adjacent matrix and vertices array
@@ -56,20 +54,13 @@ public class Graph<E> implements GraphADT<E> {
      */
     private void expandCapacity()
     {
-        E[] largerVertices = (E[])(new Object[vertices.length*2]);
-       int [][] largerAdjacency = new int[vertices.length*2][vertices.length*2];
-
-       for (int i = 0; i < this.numOfVertex; i++)
-       {
-          for (int j = 0; j < this.numOfVertex; j++)
-          {
-             largerAdjacency[i][j] = this.adjacency[i][j];
-          }
-          largerVertices[i] = this.vertices[i];
-       }
-
-       this.vertices = largerVertices;
-       this.adjacency = largerAdjacency;
+        //note, don't need to loop through array just use array.copy();
+        int [][] largerAdjacency = new int[vertices.length*2][vertices.length*2];        
+        for(int i=0; i < this.adjacency.length;i++){
+             System.arraycopy(adjacency[i],0, largerAdjacency[i], 0, this.adjacency.length*2);
+        }
+        this.vertices = Arrays.copyOf(this.vertices, this.vertices.length*2);
+        this.adjacency = largerAdjacency;
     }
     /**
      * Get the index of vertex in the vertices array
