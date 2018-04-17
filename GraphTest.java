@@ -33,7 +33,7 @@ import org.junit.Test;
  *
  * @author sapan (sapan@cs.wisc.edu)
  */
-public class GraphTestTest {
+public class GraphTest {
 
 	private GraphADT<String> graph;
 	
