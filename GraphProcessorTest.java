@@ -136,3 +136,4 @@ public class GraphProcessorTest {
 		assertEquals(graphProcessor.getShortestDistance("RAPINE", "RAPINE"), new Integer(-1));
 		assertEquals(graphProcessor.getShortestDistance("ALIKE", "ALIKE"), new Integer(-1));
 	}
+}
