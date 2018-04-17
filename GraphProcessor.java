@@ -60,8 +60,8 @@ public class GraphProcessor {
      * Graph which stores the dictionary words and their associated connections
      */
     private GraphADT<String> graph;
-    // index i = Start word, j = End word
-    private List<String>[][] shortestPaths;
+    // index i = beginning of word, j = end of word
+    private List<String>[][] shortestPath;
     
     /**
      * Constructor for this class. Initializes instances variables to set the starting state of the object
@@ -130,14 +130,12 @@ public class GraphProcessor {
      */
     public List<String> getShortestPath(String word1, String word2) {
         ArrayList<String> vertices = ((ArrayList<String>) graph.getAllVertices());
-        // .toUpperCase in case input is lower case
-        int startPoint = vertices.indexOf(word1.toUpperCase());
-        int endPoint = vertices.indexOf(word2.toUpperCase());
-        // If either points don't exist, return null
-        // Otherwise, return the path if it exists
-        if (startPoint == -1 || endPoint == -1)
+        // uppercase all input regardless of case
+        int start = vertices.indexOf(word1.toUpperCase());
+        int end = vertices.indexOf(word2.toUpperCase());
+        if (start == -1 || end == -1)
             return null;
-        return shortestPaths[startPoint][endPoint];
+        return shortestPaths[start][end];
     }
     
     /**
@@ -161,9 +159,8 @@ public class GraphProcessor {
      */
     public Integer getShortestDistance(String word1, String word2) {
         List<String> shortestPath = getShortestPath(word1, word2);
-        if (shortestPath == null) // If no path, return -1
+        if (shortestPath == null) // If there is no path, return -1
             return -1;
-        // Always one less edge compared to nodes in this path
         return shortestPath.size() - 1;
     }
     
@@ -174,11 +171,11 @@ public class GraphProcessor {
      */
     public void shortestPathPrecomputation() {
         ArrayList<String> vertices = ((ArrayList<String>) graph.getAllVertices());
-        // For each vertex, calculate the shortest distance between it and all other vertices
+        // Calculate the shortest distance between a vertex and its neighboring vertices
         for (int i = 0; i < vertices.size(); i++) {
             for (int j = 0; j < vertices.size(); j++) {
-                // If not the same vertex
-                if (!vertices.get(i).equals(vertices.get(j))) // Add into array
+                // If different vertex
+                if (!vertices.get(i).equals(vertices.get(j)))
                     shortestPaths[i][j] = shortestPathComp(vertices.get(i), vertices.get(j), vertices);
             }
         }
@@ -198,42 +195,33 @@ public class GraphProcessor {
      * @return
      */
     private List<String> shortestPathComp(String word1, String word2, ArrayList<String> vertices) {
-        /*
-         * For Dijkstra's Algorithm to work:
-         * 1. Calculate the weight of all current neighbors or change optimal weight
-         * 2. Mark current path visited
-         * 3. Choose path with smallest weight
-         * 4. Repeat until destination is in visited
-         */
-        Node curr;
-        int pathWeight = 0; // Starting path weight
+        Node current;
+        int Weightofpath = 0; // Starting path weight
         // Checks if already visited
-        boolean[] inPos = new boolean[vertices.size()]; // Integer Position
+        boolean[] inPosition = new boolean[vertices.size()]; // Integer Position
         // Gets the node with the highest priority
-        PriorityQueue<Node> lowCostPath = new PriorityQueue<Node>();
+        PriorityQueue<Node> lessCostPath = new PriorityQueue<Node>();
         lowCostPath.add(new Node(word1, 0)); // Just so we run through at least once
         
-        while (!lowCostPath.isEmpty()) {
+        while (!lessCostPath.isEmpty()) {
             // Get next best node
-            curr = lowCostPath.poll();
+            current = lessCostPath.poll();
             // If the destination was added to the list
-            if (curr.node.equals(word2))
-                return generatePath(curr); // Generates path starting with last node
+            if (current.node.equals(word2))
+                return generatePath(current); // Generates path starting with last node
             // Add all unchecked neighbors
             for (String neighbor : (ArrayList<String>) graph.getNeighbors(curr.node)) {
                 int index = vertices.indexOf(neighbor);
-                // Fist found index will always be shortest path to that index,
-                // So no need to check for other indexes or update the path
-                if (!inPos[index]) {
-                    inPos[index] = true; // Add to checked
+                if (!inPosition[index]) {
+                    inPosition[index] = true; // Add to checked
                     Node newNode = new Node(neighbor, curr, pathWeight + 1);
                     lowCostPath.add(newNode); // Add to priority queue
                 }
             }
-            // Increment path weight (since all are unweighed)
-            pathWeight++;
+            // Increment path weight 
+            Weightofpath++;
         }
-        return null; // Impossible to reach
+        return null; // If possible
     }
     
     /**
@@ -270,43 +258,33 @@ public class GraphProcessor {
     /**
      * Private class for Dijkstra's Algorithm
      * 
-     * @author andreweng
+     * @author nagsinde
      *
      */
     private class Node implements Comparable<Node> {
-        String node; // Name of the vertex
-        Node parent; // The parent of the vertex; where it came from
-        int cost; // The cost to reach this node
+        String node; // Vertex name
+        Node parentnode; // Vertex's parent
+        int weight; // The weight to reach this node
         
-        public Node(String node, int cost) {
+        public Node(String node, int weight) {
             this.node = node;
-            parent = null;
-            this.cost = cost;
+            parentnode = null;
+            this.weight = weight;
         }
         
-        public Node(String node, Node parent, int cost) {
+        public Node(String node, Node parent, int weight) {
             this.node = node;
-            this.parent = parent;
-            this.cost = cost;
+            this.parentnode = parentnode;
+            this.weight = weight;
         }
         
         /**
-         * Compares two nodes based on their costs
+         * Compares two nodes based on their weights
          */
         @Override
         public int compareTo(Node o) {
-            return cost - o.cost;
+            return weight - o.weight;
         }
         
-        /**
-         * Test method for debugging
-         */
-        @Override
-        public String toString() {
-            if (parent != null)
-                return "Node: " + node + "\nParent: " + parent.node + "\nCost: " + cost + "\n";
-            else
-                return "Node: " + node + "\nParent: null\nCost: " + cost + "\n";
-        }
     }
 }
