@@ -57,7 +57,7 @@ public class Graph<E> implements GraphADT<E> {
         //note, don't need to loop through array just use array.copy();
         int [][] largerAdjacency = new int[vertices.length*2][vertices.length*2];        
         for(int i=0; i < this.adjacency.length;i++){
-             System.arraycopy(adjacency[i],0, largerAdjacency[i], 0, this.adjacency.length*2);
+             System.arraycopy(adjacency[i],0, largerAdjacency[i], 0, this.adjacency.length);
         }
         this.vertices = Arrays.copyOf(this.vertices, this.vertices.length*2);
         this.adjacency = largerAdjacency;
